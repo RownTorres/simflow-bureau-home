@@ -1,32 +1,38 @@
 type Props = {
-  index?: string;
-  eyebrow?: string;
+  eyebrow: string;
   title: React.ReactNode;
   description?: string;
   align?: "left" | "center";
+  id?: string;
 };
 
 export function SectionHeading({
-  index,
   eyebrow,
   title,
   description,
   align = "left",
+  id,
 }: Props) {
-  const alignClass = align === "center" ? "text-center mx-auto" : "text-left";
+  const alignClass =
+    align === "center" ? "mx-auto text-center items-center" : "text-left";
+
   return (
-    <div className={`max-w-3xl ${alignClass}`}>
-      {(index || eyebrow) && (
-        <div className="flex items-baseline gap-4 text-xs uppercase tracking-[0.25em] text-ink-500">
-          {index && <span className="font-medium text-gold-dark">{index}</span>}
-          {eyebrow && <span>{eyebrow}</span>}
-        </div>
-      )}
-      <h2 className="mt-6 text-4xl font-light leading-[1.05] tracking-tightest text-ink-900 md:text-6xl">
+    <div className={`flex max-w-2xl flex-col ${alignClass}`}>
+      <p
+        className={`inline-flex items-center gap-2 rounded-full border border-edge bg-card/60 px-4 py-1.5 font-heading text-xs font-semibold uppercase tracking-[0.18em] text-accent ${
+          align === "center" ? "" : "self-start"
+        }`}
+      >
+        {eyebrow}
+      </p>
+      <h2
+        id={id}
+        className="mt-6 text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl"
+      >
         {title}
       </h2>
       {description && (
-        <p className="mt-6 max-w-xl text-lg font-normal leading-relaxed text-ink-500">
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-body md:text-lg">
           {description}
         </p>
       )}

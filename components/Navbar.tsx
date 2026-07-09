@@ -1,65 +1,96 @@
-import Link from "next/link";
-import { Logo } from "./ui/Logo";
-import { BOOKING_URL } from "@/lib/links";
+"use client";
 
-const links = [
-  { href: "#services", label: "Services" },
-  { href: "#how", label: "Process" },
-  { href: "#stats", label: "Results" },
-  { href: "#faq", label: "FAQ" },
-];
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Logo } from "./ui/Logo";
+import { Button } from "./ui/Button";
+import { BOOK_PATH, NAV_LINKS } from "@/lib/links";
 
 export function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-cream/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-container items-center justify-between px-6 py-6 lg:px-12">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-expo ${
+        scrolled
+          ? "border-b border-edge/80 bg-ink/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-container items-center justify-between px-6 py-4 lg:px-10">
         <Link
           href="/"
-          className="transition-opacity duration-500 ease-out hover:opacity-80"
+          className="transition-opacity duration-300 hover:opacity-80"
+          onClick={() => setOpen(false)}
         >
           <Logo />
         </Link>
 
-        <nav
-          className="hidden items-center gap-10 md:flex"
-          aria-label="Primary"
-        >
-          {links.map((link) => (
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+          {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="group relative text-sm font-normal text-ink-700 transition-colors duration-500 ease-out hover:text-ink-900"
+              className="font-heading text-sm font-medium text-body transition-colors duration-300 hover:text-heading"
             >
-              <span>{link.label}</span>
-              <span className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-gold-dark transition-transform duration-500 ease-out group-hover:scale-x-100" />
+              {link.label}
             </Link>
           ))}
         </nav>
 
-        <a
-          href={BOOKING_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 text-sm font-medium text-ink-900 transition-colors duration-500 ease-out hover:text-gold-dark"
+        <div className="hidden md:block">
+          <Button href={BOOK_PATH} withArrow className="px-6 py-3">
+            Book a Strategy Call
+          </Button>
+        </div>
+
+        <button
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-edge text-heading md:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}
         >
-          <span>Book System Audit</span>
-          <svg
-            viewBox="0 0 16 16"
-            fill="none"
-            className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:translate-x-0.5"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
-      <div className="h-px w-full bg-ink-100" />
+
+      {open && (
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile"
+          className="border-t border-edge bg-ink/95 px-6 pb-8 pt-4 backdrop-blur-xl md:hidden"
+        >
+          <ul className="flex flex-col gap-1">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="block rounded-xl px-4 py-3 font-heading text-base font-medium text-body transition-colors hover:bg-card hover:text-heading"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6">
+            <Button href={BOOK_PATH} withArrow className="w-full">
+              Book a Strategy Call
+            </Button>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

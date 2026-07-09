@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 type Variant = "primary" | "secondary" | "ghost";
 
 type ButtonProps = {
-  href?: string;
+  href: string;
   variant?: Variant;
   children: React.ReactNode;
   withArrow?: boolean;
@@ -13,16 +13,18 @@ type ButtonProps = {
 };
 
 const base =
-  "group inline-flex items-center justify-center gap-3 px-7 py-4 text-sm font-medium tracking-wide transition-colors duration-300";
+  "group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 font-heading text-sm font-semibold tracking-wide transition-all duration-300 ease-out-expo focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink-900 text-cream hover:bg-gold-dark",
-  secondary: "border border-ink-900 text-ink-900 hover:bg-ink-900 hover:text-cream",
-  ghost: "text-ink-900 hover:text-gold-dark",
+  primary:
+    "bg-accent text-ink shadow-[0_0_0_0_rgb(var(--color-accent)/0)] hover:shadow-[0_0_32px_-6px_rgb(var(--color-accent)/0.55)] hover:brightness-110 hover:-translate-y-0.5",
+  secondary:
+    "border border-edge bg-card/60 text-heading hover:border-muted hover:bg-card hover:-translate-y-0.5",
+  ghost: "text-body hover:text-accent",
 };
 
 export function Button({
-  href = "#audit",
+  href,
   variant = "primary",
   children,
   withArrow = false,
@@ -33,7 +35,10 @@ export function Button({
     <>
       <span>{children}</span>
       {withArrow && (
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight
+          aria-hidden="true"
+          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+        />
       )}
     </>
   );

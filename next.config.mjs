@@ -1,16 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
-    ],
-  },
+  // All imagery is served from /public via next/image; no remote hosts needed.
+  poweredByHeader: false,
 };
+
 export default nextConfig;

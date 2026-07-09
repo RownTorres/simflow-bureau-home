@@ -1,18 +1,55 @@
 import type { Metadata } from "next";
-import { Fraunces } from "next/font/google";
+import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-montserrat",
   display: "swap",
-  axes: ["opsz"],
+});
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Simflow Bureau - GHL Automation for Service Businesses",
+  metadataBase: new URL("https://simflowbureau.com"),
+  title: {
+    default: "Simflow Bureau - AI, CRM & Business Automation Agency",
+    template: "%s | Simflow Bureau",
+  },
   description:
-    "We design Go HighLevel systems that nurture leads, fill calendars, and turn your CRM into an income engine. Schedule your System Audit.",
+    "We build AI-powered systems that capture leads, automate follow-up, and turn more prospects into customers. CRM implementation, AI employees, and workflow automation for growing businesses.",
+  keywords: [
+    "business automation",
+    "CRM setup",
+    "GoHighLevel",
+    "AI employees",
+    "workflow automation",
+    "sales funnels",
+    "lead automation",
+    "Simflow Bureau",
+  ],
+  authors: [{ name: "Roanne Torres" }],
+  creator: "Roanne Torres",
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Simflow Bureau - AI, CRM & Business Automation Agency",
+    description:
+      "Intelligent systems that save you time, eliminate repetitive work, and turn more leads into customers.",
+    url: "/",
+    type: "website",
+    siteName: "Simflow Bureau",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Simflow Bureau - AI, CRM & Business Automation Agency",
+    description:
+      "Intelligent systems that save you time, eliminate repetitive work, and turn more leads into customers.",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={fraunces.variable}>
+    <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
       <body>{children}</body>
     </html>
   );

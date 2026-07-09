@@ -5,46 +5,46 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "oklch(98% 0.008 85)",
-        ink: {
-          DEFAULT: "oklch(15% 0.008 80)",
-          900: "oklch(15% 0.008 80)",
-          700: "oklch(35% 0.008 80)",
-          500: "oklch(55% 0.008 80)",
-          300: "oklch(75% 0.008 80)",
-          100: "oklch(92% 0.008 80)",
-        },
-        gold: {
-          DEFAULT: "oklch(72% 0.10 85)",
-          dark: "oklch(58% 0.11 78)",
-        },
+        ink: "rgb(var(--color-base) / <alpha-value>)",
+        raised: "rgb(var(--color-raised) / <alpha-value>)",
+        card: "rgb(var(--color-card) / <alpha-value>)",
+        edge: "rgb(var(--color-edge) / <alpha-value>)",
+        heading: "rgb(var(--color-text) / <alpha-value>)",
+        body: "rgb(var(--color-text-2) / <alpha-value>)",
+        muted: "rgb(var(--color-text-3) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
       },
       fontFamily: {
-        serif: ["var(--font-fraunces)", "Georgia", "serif"],
+        heading: ["var(--font-montserrat)", "sans-serif"],
+        body: ["var(--font-open-sans)", "sans-serif"],
       },
       maxWidth: {
-        container: "78rem",
+        container: "76rem",
       },
-      letterSpacing: {
-        tightest: "-0.04em",
+      borderRadius: {
+        card: "1.25rem",
+        panel: "1.5rem",
+      },
+      boxShadow: {
+        card: "0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 16px 40px -20px rgb(0 0 0 / 0.6)",
+        lift: "0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 24px 60px -24px rgb(0 0 0 / 0.7)",
       },
       transitionTimingFunction: {
-        "out-quart": "cubic-bezier(0.25, 1, 0.5, 1)",
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "reveal-line": {
-          "0%": { transform: "scaleX(0)" },
-          "100%": { transform: "scaleX(1)" },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
       animation: {
-        "fade-up": "fade-up 1s cubic-bezier(0.25, 1, 0.5, 1) forwards",
-        "reveal-line": "reveal-line 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "fade-up": "fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "fade-in": "fade-in 1.2s ease-out forwards",
       },
     },
   },

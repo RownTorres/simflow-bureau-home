@@ -1,12 +1,22 @@
+import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { TrustedBy } from "@/components/TrustedBy";
+import { WhyUs } from "@/components/WhyUs";
 import { Services } from "@/components/Services";
-import { Stats } from "@/components/Stats";
-import { HowItWorks } from "@/components/HowItWorks";
+import { Process } from "@/components/Process";
+import { AutomationFlow } from "@/components/AutomationFlow";
+import { Results } from "@/components/Results";
+import { Projects } from "@/components/Projects";
+import { About } from "@/components/About";
+import { Testimonials } from "@/components/Testimonials";
 import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
+import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (
@@ -15,11 +25,16 @@ export default function HomePage() {
       <main>
         <Hero />
         <TrustedBy />
+        <WhyUs />
         <Services />
-        <Stats />
-        <HowItWorks />
+        <Process />
+        <AutomationFlow />
+        <Results />
+        <Projects />
+        <About />
+        <Testimonials />
         <Faq />
-        <CtaBand />
+        <FinalCta />
       </main>
       <Footer />
     </>

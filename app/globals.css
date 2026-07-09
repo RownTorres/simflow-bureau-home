@@ -2,30 +2,207 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Color tokens as RGB triplets so Tailwind alpha modifiers work */
+  --color-base: 17 17 17; /* #111111 */
+  --color-raised: 27 27 27; /* #1B1B1B */
+  --color-card: 32 32 32; /* #202020 */
+  --color-edge: 42 42 42; /* #2A2A2A */
+  --color-text: 255 255 255; /* #FFFFFF */
+  --color-text-2: 191 191 191; /* #BFBFBF */
+  --color-text-3: 128 128 128; /* #808080 */
+  --color-accent: 255 165 0; /* #FFA500 */
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-cream text-ink-700 font-serif antialiased;
-  font-feature-settings: "ss01", "ss02";
-  font-optical-sizing: auto;
+  @apply bg-ink font-body text-body antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4 {
-  @apply text-ink-900;
-  font-feature-settings: "ss01";
-  font-optical-sizing: auto;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @apply font-heading text-heading;
 }
 
 ::selection {
-  background: #C9A961;
-  color: #0A0A0A;
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-base));
+}
+
+/* Scroll-triggered reveal (driven by components/ui/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Marquee for the tool-logo strip */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* Traveling pulse along automation-flow connectors */
+@keyframes flow-pulse {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes dash-travel {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 6 42;
+  animation: dash-travel 1.6s linear infinite;
+}
+
+/* Soft breathing glow used behind hero + CTA */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+.animate-glow {
+  animation: glow-breathe 6s ease-in-out infinite;
+}
+
+/* Gentle float for hero metric chips */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-y 5s ease-in-out 2.5s infinite;
+}
+
+/* Blinking status dot */
+@keyframes status-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-status {
+  animation: status-blink 2s ease-in-out infinite;
+}
+
+/* Booking-confirmed success badge */
+@keyframes check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-check-pop {
+  animation: check-pop 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Expanding ripple ring behind the success badge */
+@keyframes ring-ripple {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+.animate-ring-ripple {
+  animation: ring-ripple 2.6s ease-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }
